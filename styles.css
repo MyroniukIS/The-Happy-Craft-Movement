@@ -457,14 +457,19 @@ section > .container > h2 {
 /* Responsive adjustments */
 @media (max-width: 600px) {
   .testimonials-carousel .carousel-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 1.2rem;
+    /* width: 32px; */
+    /* height: 32px; */
+    /* font-size: 1.2rem; */
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
   }
 
   .testimonial {
-    flex: 0 0 95%;
-    max-width: 95%;
+    /* flex: 0 0 95%; */
+    /* max-width: 95%; */
+    flex: 0 0 90%;
+    max-width: 90%;
   }
 }
 
@@ -748,6 +753,9 @@ section > .container > h2 {
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 600px) {
+  .carousel-slide {
+    min-width: 90%;
+  }
   .carousel-btn {
     width: 32px;
     height: 32px;
@@ -755,7 +763,8 @@ section > .container > h2 {
   }
 
   .carousel-slide img {
-    max-height: 320px;
+    /* max-height: 320px; */
+    max-height: 300px;
   }
 }
 
@@ -829,11 +838,13 @@ section > .container > h2 {
 /* For small screens - move arrows slightly outside and reduce overlap */
 @media (max-width: 600px) {
   .carousel-btn.prev {
-    left: -5px; /* трохи виносимо за межу контейнера */
+    /* left: -5px; /* трохи виносимо за межу контейнера */
+    left: -8px;
   }
 
   .carousel-btn.next {
-    right: -5px; /* те саме для правої */
+    /* right: -5px; /* те саме для правої */
+    right: -8px;
   }
 
   .carousel-btn {
@@ -841,19 +852,36 @@ section > .container > h2 {
     height: 32px;
     font-size: 1.2rem;
     background: rgba(62, 30, 104, 0.6); /* трохи м’якше */
+    overflow: visible; /* щоб псевдо-елементи або hover-круги не обрізались */
   }
 
   .carousel {
     padding: 0 10px;
+    /* padding: 0 20px; */
+    overflow: visible; /* ключова зміна: дозволяємо hover-ефекту виходити за межі */
+  }
+  /* !!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+  .carousel-slide {
+    overflow: visible; /* дозволяємо зображенням виходити за межі контейнера */
+  }
+
+  .carousel-slide img {
+    object-fit: contain; /* повністю поміщаємо зображення всередину */
+  }
+  .carousel-slide img:hover,
+  .carousel-slide img:focus {
+    transform: none; /* прибираємо збільшення на мобільних */
   }
 }
 
 /* Extra-small devices (phones under 400px wide) */
 @media (max-width: 400px) {
   .carousel-btn.prev {
-    left: -10px;
+    /* left: -10px; */
+    left: -12px;
   }
   .carousel-btn.next {
-    right: -10px;
+    /* right: -10px; */
+    right: -12px;
   }
 }
