@@ -92,11 +92,21 @@ body {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
+/* 
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  text-align: center;
+} */
 
 .header-inner {
   display: flex;
   align-items: center;
+  justify-content: flex-start; /* логотип залишається зліва */
   gap: var(--space-md);
+  text-align: left;
 }
 
 .logo img {
@@ -104,9 +114,17 @@ body {
   border-radius: 8px;
 }
 
+/* .site-title-wrapper {
+  flex: 1;
+  text-align: center;
+} */
 .site-title-wrapper {
   flex: 1;
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
 }
 
 /* Pacifico font for title, larger */
@@ -116,6 +134,44 @@ body {
   color: var(--text-on-dark);
   font-size: clamp(1.6rem, 4vw, 2.6rem);
   line-height: 1;
+  text-align: left;
+}
+
+/* Subtitle under main title */
+.site-subtitle {
+  margin: 6px 0 0 0;
+  font-family: "Pacifico", "Playfair Display", Georgia, serif; /* той самий шрифт */
+  color: var(--text-on-dark);
+  font-size: clamp(1.1rem, 3vw, 1.8rem); /* трошки менше за h1 */
+  line-height: 1.2;
+  text-align: left;
+  opacity: 0.9; /* легкий візуальний контраст */
+}
+
+@media (max-width: 600px) {
+  /* .header-inner {
+    flex-direction: column;
+    text-align: center;
+  } */
+  .header-inner {
+    flex-direction: row; /* залишається горизонтально */
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .logo img {
+    margin-bottom: 10px;
+    width: 60px;
+    height: 60px;
+  }
+
+  .site-title {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+  }
+
+  .site-subtitle {
+    font-size: clamp(1rem, 3vw, 1.4rem);
+  }
 }
 
 /* ========== Main sections ========== */
