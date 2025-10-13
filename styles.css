@@ -1,0 +1,859 @@
+/* styles.css
+   Semantic, responsive, variables at top for easy color changes.
+*/
+
+/* ========== Color variables ========== */
+:root {
+  /* primary palette (you asked to keep in variables) */
+  --bg-dark: #3e1e68; /* site background */
+  --text-on-dark: #ffacac; /* text on dark backgrounds */
+  --text-on-light: #3e1e68; /* text on light backgrounds */
+  --accent-1: #5d2f77; /* section / card accent */
+  --accent-2: #e45a92; /* secondary accent */
+  --white: #ffffff;
+  --max-width: 1200px;
+
+  /* spacing scale */
+  --space-xs: 6px;
+  --space-sm: 12px;
+  --space-md: 20px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+
+  /* radius and shadows */
+  --radius: 12px;
+  --card-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* ========== Base ========== */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  background: var(--bg-dark);
+  color: var(--text-on-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.45;
+}
+
+/* skip link for accessibility */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 1rem;
+  background: var(--white);
+  color: var(--bg-dark);
+  border-radius: 6px;
+  z-index: 9999;
+}
+
+/* layout container */
+.container {
+  width: calc(100% - 2 * var(--space-md));
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+/* Utility visually-hidden for figcaptions etc. */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: -1px;
+}
+
+/* ========== Header ========== */
+.site-header {
+  padding: var(--space-sm) 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.logo img {
+  display: block;
+  border-radius: 8px;
+}
+
+.site-title-wrapper {
+  flex: 1;
+  text-align: left;
+}
+
+/* Pacifico font for title, larger */
+.site-title {
+  margin: 0;
+  font-family: "Pacifico", "Playfair Display", Georgia, serif;
+  color: var(--text-on-dark);
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  line-height: 1;
+}
+
+/* ========== Main sections ========== */
+.site-main {
+  padding: var(--space-lg) 0;
+  color: var(--text-on-dark);
+}
+
+/* Section headings */
+section > .container > h2 {
+  margin: 0 0 var(--space-md) 0;
+  color: var(--text-on-dark);
+  font-size: 1.5rem;
+  letter-spacing: 0.2px;
+}
+
+/* ===== Unified section title style ===== */
+.section-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--text-on-dark);
+  letter-spacing: 0.3px;
+}
+
+/* ========== Instructor Section ========== */
+.instructor-section {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  padding: var(--space-lg) 0;
+  border-radius: 12px;
+  margin-bottom: var(--space-lg);
+}
+
+.instructor-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+/* photo left, text right */
+.instructor-photo {
+  flex: 0 0 420px;
+  max-width: 420px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+
+.instructor-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Bio column */
+.instructor-bio {
+  flex: 1 1 320px;
+  color: var(--text-on-dark);
+  background: rgba(255, 255, 255, 0.02);
+  padding: var(--space-md);
+  border-radius: calc(var(--radius) - 4px);
+}
+
+/* ---------- Workshops Section ---------- */
+.workshops {
+  background-color: var(--color-light);
+  color: var(--color-dark);
+  padding: 60px 20px;
+  text-align: center;
+}
+
+/* .workshops .section-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: var(--color-primary-dark);
+} */
+
+.workshops .section-title {
+  color: var(--color-primary-dark);
+}
+
+.workshops-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.workshop-card {
+  background-color: var(--white);
+  color: var(--text-on-light);
+  border-radius: 15px;
+  padding: 30px;
+  width: 300px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.workshop-card:hover {
+  transform: translateY(-5px);
+}
+
+.workshop-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: var(--text-on-light);
+}
+
+.workshop-card p {
+  margin: 5px 0;
+  font-size: 1rem;
+}
+
+/* Address link */
+/* clickable map link inside address */
+.map-link {
+  color: var(--accent-1); /* стиль у тон решти тексту */
+  font-weight: 600;
+  text-decoration: none; /* прибираємо стандартне підкреслення */
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.map-link:hover,
+.map-link:focus {
+  color: var(--accent-2); /* зміна кольору при наведенні/фокусі */
+  text-decoration: underline; /* додаємо підкреслення для UX */
+  outline: none; /* прибираємо стандартну рамку браузера */
+}
+
+.invite-text {
+  font-size: 0.95rem;
+  margin-top: 15px;
+  color: var(--accent-1);
+}
+
+/* WhatsApp Button (same as footer) */
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #25d366;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 18px;
+  border-radius: 30px;
+  margin-top: 15px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.whatsapp-btn:hover {
+  background-color: #1ebe5c;
+  transform: scale(1.05);
+}
+
+.whatsapp-btn i {
+  font-size: 1.2rem;
+}
+
+/* ---------- Responsive Design ---------- */
+/* ========== Responsive: Instructor photo adjustments ========== */
+
+/* Tablets and smaller (<= 768px) */
+@media (max-width: 768px) {
+  .instructor-photo {
+    flex: 0 0 300px;
+    max-width: 300px;
+    margin: 0 auto var(--space-md); /* center horizontally + add spacing below */
+  }
+
+  .instructor-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .instructor-bio {
+    text-align: center;
+  }
+}
+
+/* Very small screens (<= 480px) */
+@media (max-width: 480px) {
+  .instructor-photo {
+    flex: 0 0 240px;
+    max-width: 240px;
+  }
+}
+
+@media (max-width: 992px) {
+  .workshop-card {
+    width: 100%;
+    max-width: 450px;
+  }
+}
+
+@media (max-width: 600px) {
+  .workshops-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ========== Gallery : horizontal scrollable ========== */
+/* .image-gallery {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  padding-bottom: var(--space-sm);
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+} */
+
+/* .gallery-item {
+  flex: 0 0 80%;
+  max-width: 80%;
+  scroll-snap-align: center;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: var(--card-shadow);
+} */
+
+/* .gallery-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+} */
+
+/* ========== Testimonials horizontal gallery ========== */
+.testimonials-gallery {
+  display: flex;
+  gap: var(--space-md);
+  overflow-x: auto;
+  padding-bottom: var(--space-sm);
+  scroll-snap-type: x mandatory;
+}
+
+.testimonial {
+  flex: 0 0 80%;
+  max-width: 80%;
+  background: rgba(255, 255, 255, 0.04);
+  padding: var(--space-md);
+  border-radius: 12px;
+  scroll-snap-align: center;
+  color: var(--text-on-dark);
+  box-shadow: var(--card-shadow);
+}
+
+.testimonial blockquote {
+  margin: 0 0 var(--space-sm) 0;
+  font-style: italic;
+}
+
+/* testimonial author */
+.testimonial-author {
+  margin: 0;
+  font-weight: 700;
+  color: var(--accent-2);
+}
+
+/* ========== Testimonials Carousel ========== */
+.testimonials-carousel {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Track container */
+.testimonials-carousel .carousel-track-container {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Horizontal track */
+.testimonials-carousel .carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Each testimonial slide */
+.testimonials-carousel .carousel-slide {
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Keep existing testimonial style inside slides */
+.testimonial {
+  flex: 0 0 90%;
+  max-width: 90%;
+  background: rgba(255, 255, 255, 0.04);
+  padding: var(--space-md);
+  border-radius: 12px;
+  color: var(--text-on-dark);
+  box-shadow: var(--card-shadow);
+  margin: 0 auto;
+}
+
+/* Reuse arrow buttons from gallery carousel */
+.testimonials-carousel .carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(62, 30, 104, 0.7);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.3s ease;
+}
+
+.testimonials-carousel .carousel-btn:hover {
+  background: rgba(228, 90, 146, 0.85);
+}
+
+.testimonials-carousel .carousel-btn.prev {
+  left: 10px;
+}
+
+.testimonials-carousel .carousel-btn.next {
+  right: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .testimonials-carousel .carousel-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+
+  .testimonial {
+    flex: 0 0 95%;
+    max-width: 95%;
+  }
+}
+
+/* ============================
+   Testimonials: fixed shape + inner scroll
+   Keeps visual rectangles and prevents tall items from stretching layout
+   ============================ */
+
+/* Make the testimonial a flex column so content can grow/scroll nicely */
+.testimonial {
+  display: flex;
+  flex-direction: column;
+  /* Base width: keeps existing visual sizing, center with margin */
+  flex: 0 0 90%;
+  max-width: 90%;
+  margin: 0 auto;
+
+  /* Control the overall block shape (min and max heights) */
+  min-height: 240px; /* ensures not too short on mobiles */
+  max-height: 380px; /* prevents extremely tall boxes */
+  overflow: hidden; /* hide overflow; inner area will scroll */
+}
+
+/* The main text area (blockquote) should take available space and be scrollable */
+.testimonial blockquote {
+  flex: 1 1 auto; /* grow to fill available vertical space */
+  margin: 0 0 1rem 0;
+  overflow-y: auto; /* scroll if content too tall */
+  padding-right: 8px; /* room for scrollbar / breathing space */
+  line-height: 1.45;
+  -webkit-overflow-scrolling: touch; /* smooth touch scrolling on iOS */
+}
+
+/* Make author sit at bottom */
+.testimonial .testimonial-author {
+  flex: 0 0 auto;
+  margin-top: 0.5rem;
+  font-weight: 700;
+  color: var(--accent-2);
+  text-align: right;
+}
+
+/* Optional: subtle scrollbar styling for modern browsers */
+.testimonial blockquote::-webkit-scrollbar {
+  width: 8px;
+}
+.testimonial blockquote::-webkit-scrollbar-thumb {
+  background: rgba(93, 47, 119, 0.35);
+  border-radius: 6px;
+}
+.testimonial blockquote::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ===== Responsive adjustments to shape (recommended values) ===== */
+
+/* Tablet and up — slightly taller, more rectangular */
+@media (min-width: 768px) {
+  .testimonial {
+    min-height: 280px;
+    max-height: 420px;
+    flex: 0 0 85%;
+    max-width: 85%;
+  }
+}
+
+/* Laptop and desktop — wider but not too tall (more rectangle) */
+@media (min-width: 992px) {
+  .testimonial {
+    min-height: 320px;
+    max-height: 440px;
+    flex: 0 0 70%;
+    max-width: 70%;
+  }
+}
+
+/* Large desktop — even wider, less tall (more like rectangle) */
+@media (min-width: 1200px) {
+  .testimonial {
+    min-height: 340px;
+    max-height: 460px;
+    flex: 0 0 60%;
+    max-width: 60%;
+  }
+}
+
+/* ========== Footer ========== */
+.site-footer {
+  margin-top: var(--space-lg);
+  padding: var(--space-md) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  color: var(--text-on-dark);
+}
+
+.footer-inner {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.contact a {
+  color: var(--text-on-dark);
+  text-decoration: none;
+}
+
+.join-cta {
+  text-align: right;
+  max-width: 420px;
+}
+
+/* WhatsApp link */
+.whatsapp-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+  color: var(--white);
+  margin-top: 0.5rem;
+}
+
+.whatsapp-link svg {
+  fill: var(--white);
+}
+.whatsapp-text {
+  font-weight: 600;
+}
+
+/* bottom footer */
+.footer-bottom {
+  margin-top: var(--space-md);
+  padding-top: var(--space-sm);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* ========== Responsiveness ========== */
+/* mobile first - small screens already ok */
+
+/* >= 360px (phones) - default rules handle */
+/* >= 768px tablets */
+@media (min-width: 768px) {
+  .gallery-item,
+  .testimonial {
+    flex: 0 0 48%;
+    max-width: 48%;
+  }
+
+  .instructor-inner {
+    gap: var(--space-xl);
+  }
+}
+
+/* >= 992px laptops: make card widths consistent (two per row) */
+@media (min-width: 992px) {
+  .workshop-card {
+    flex: 1 1 calc(50% - var(--space-md));
+  }
+
+  .instructor-photo {
+    flex: 0 0 360px;
+    max-width: 360px;
+  }
+  .instructor-bio {
+    padding: var(--space-lg);
+  }
+}
+
+/* >= 1200px desktop: larger container and show gallery items bigger */
+@media (min-width: 1200px) {
+  :root {
+    --max-width: 1400px;
+  }
+
+  .gallery-item,
+  .testimonial {
+    flex: 0 0 33%;
+    max-width: 33%;
+  }
+
+  .workshop-card {
+    min-height: 220px;
+  }
+}
+
+/* high contrast adjustments */
+@media (prefers-contrast: more) {
+  .workshop-card {
+    border: 2px solid rgba(255, 255, 255, 0.06);
+  }
+  .site-title {
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* ========== Workshop Gallery Carousel ========== */
+/* Wrapper for carousel */
+/* .carousel {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  background: var(--bg-dark);
+} */
+
+/* ========== Workshop Gallery Carousel (updated for consistency) ========== */
+
+/* Outer wrapper — similar logic as Testimonials Carousel */
+.carousel {
+  position: relative;
+  max-width: 800px; /* same width as testimonials */
+  margin: 0 auto;
+  overflow: hidden; /* hide parts of other slides */
+}
+
+/* Track container */
+.carousel-track-container {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Horizontal track for slides */
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Each slide — show one per view */
+.carousel-slide {
+  min-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Remove visible frame/shadow around images */
+.carousel-slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 450px;
+  object-fit: contain; /* keeps full image visible */
+  border-radius: 0; /* remove rounded corners */
+  box-shadow: none; /* no individual shadow */
+  background: transparent; /* no background boxes */
+}
+
+/* Carousel navigation buttons (same as testimonials) */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(62, 30, 104, 0.7);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.3s ease;
+}
+
+.carousel-btn:hover {
+  background: rgba(228, 90, 146, 0.85);
+}
+
+.carousel-btn.prev {
+  left: 10px;
+}
+
+.carousel-btn.next {
+  right: 10px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .carousel-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+
+  .carousel-slide img {
+    max-height: 320px;
+  }
+}
+
+/* Track container for horizontal movement */
+.carousel-track-container {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Track = the row of slides */
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Each slide */
+.carousel-slide {
+  min-width: 100%;
+  overflow: hidden;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  max-height: 450px;
+  /*object-fit: cover; /* зображення заповнює весь слайд */
+  object-fit: contain;
+  display: block;
+}
+
+/* Buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(62, 30, 104, 0.7); /* semi-transparent purple */
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.3s ease;
+}
+
+.carousel-btn:hover {
+  background: rgba(228, 90, 146, 0.85);
+}
+
+.carousel-btn.prev {
+  left: 10px;
+}
+
+.carousel-btn.next {
+  right: 10px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .carousel-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+}
+
+/* ========== Responsive: Carousel arrows fix ========== */
+
+/* For small screens - move arrows slightly outside and reduce overlap */
+@media (max-width: 600px) {
+  .carousel-btn.prev {
+    left: -5px; /* трохи виносимо за межу контейнера */
+  }
+
+  .carousel-btn.next {
+    right: -5px; /* те саме для правої */
+  }
+
+  .carousel-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+    background: rgba(62, 30, 104, 0.6); /* трохи м’якше */
+  }
+
+  .carousel {
+    padding: 0 10px;
+  }
+}
+
+/* Extra-small devices (phones under 400px wide) */
+@media (max-width: 400px) {
+  .carousel-btn.prev {
+    left: -10px;
+  }
+  .carousel-btn.next {
+    right: -10px;
+  }
+}
