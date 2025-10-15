@@ -139,10 +139,10 @@ body {
 
 /* Subtitle under main title */
 .site-subtitle {
-  margin: 6px 0 0 0;
-  font-family: "Pacifico", "Playfair Display", Georgia, serif; /* той самий шрифт */
+  margin: 15px 0 0 0;
+  /* font-family: "Pacifico", "Playfair Display", Georgia, serif;  */
   color: var(--text-on-dark);
-  font-size: clamp(1.1rem, 3vw, 1.8rem); /* трошки менше за h1 */
+  font-size: clamp(1rem, 3vw, 1.6rem); /* трошки менше за h1 */
   line-height: 1.2;
   text-align: left;
   opacity: 0.9; /* легкий візуальний контраст */
@@ -207,7 +207,7 @@ section > .container > h2 {
   );
   padding: var(--space-lg) 0;
   border-radius: 12px;
-  margin-bottom: var(--space-lg);
+  /* margin-bottom: var(--space-lg); */
 }
 
 .instructor-inner {
@@ -460,6 +460,8 @@ section > .container > h2 {
 .testimonials-carousel .carousel-track {
   display: flex;
   transition: transform 0.5s ease-in-out;
+  padding: 0 20px;
+  /* gap: 20px;  */
 }
 
 /* Each testimonial slide */
@@ -756,6 +758,8 @@ section > .container > h2 {
 .carousel-track {
   display: flex;
   transition: transform 0.5s ease-in-out;
+  padding: 0 20px;
+  gap: 20px; /* додає проміжок між слайдами */
 }
 
 /* Each slide — show one per view */
@@ -768,11 +772,15 @@ section > .container > h2 {
 
 /* Remove visible frame/shadow around images */
 .carousel-slide img {
-  display: block;
+  /* width: 100%;
+  height: 100%; */
+  /*object-fit: cover; /* зображення заповнює весь слайд */
   width: 100%;
-  height: auto;
+  height: auto; /* ✅ головне: дозволяє зображенню пропорційно зменшуватись */
   max-height: 450px;
-  object-fit: contain; /* keeps full image visible */
+  object-fit: contain; /* зберігає пропорції */
+  display: block;
+  transition: max-height 0.4s ease, width 0.4s ease; /* плавна зміна висоти при ресайзі */
   border-radius: 0; /* remove rounded corners */
   box-shadow: none; /* no individual shadow */
   background: transparent; /* no background boxes */
@@ -808,7 +816,8 @@ section > .container > h2 {
 }
 
 /* Responsive adjustments for smaller screens */
-@media (max-width: 600px) {
+/* @media (max-width: 600px) { */
+@media (max-width: 768px) {
   .carousel-slide {
     min-width: 90%;
   }
@@ -818,10 +827,10 @@ section > .container > h2 {
     font-size: 1.2rem;
   }
 
-  .carousel-slide img {
-    /* max-height: 320px; */
+  /* .carousel-slide img {
     max-height: 300px;
-  }
+    min-height: 180px;
+  } */
 }
 
 /* Track container for horizontal movement */
@@ -834,21 +843,14 @@ section > .container > h2 {
 .carousel-track {
   display: flex;
   transition: transform 0.5s ease-in-out;
+  padding: 0 20px;
+  gap: 20px; /* додає проміжок між слайдами */
 }
 
 /* Each slide */
 .carousel-slide {
   min-width: 100%;
   overflow: hidden;
-}
-
-.carousel-slide img {
-  width: 100%;
-  height: 100%;
-  max-height: 450px;
-  /*object-fit: cover; /* зображення заповнює весь слайд */
-  object-fit: contain;
-  display: block;
 }
 
 /* Buttons */
@@ -913,17 +915,20 @@ section > .container > h2 {
 
   .carousel {
     padding: 0 10px;
-    /* padding: 0 20px; */
-    overflow: visible; /* ключова зміна: дозволяємо hover-ефекту виходити за межі */
-  }
-  /* !!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-  .carousel-slide {
-    overflow: visible; /* дозволяємо зображенням виходити за межі контейнера */
+    overflow: hidden; /* ✅ знову приховуємо сусідів */
   }
 
-  .carousel-slide img {
-    object-fit: contain; /* повністю поміщаємо зображення всередину */
+  /* .carousel-track {
+    gap: 20px; 
+  } */
+
+  .carousel-slide {
+    overflow: hidden; /* ✅ гарантує, що слайди не "виглядають" */
   }
+
+  /* .carousel-slide img {
+    object-fit: contain; 
+  } */
   .carousel-slide img:hover,
   .carousel-slide img:focus {
     transform: none; /* прибираємо збільшення на мобільних */
@@ -939,5 +944,24 @@ section > .container > h2 {
   .carousel-btn.next {
     /* right: -10px; */
     right: -12px;
+  }
+}
+
+/* ✅ Unified responsive rule for gallery images */
+@media (max-width: 768px) {
+  .carousel-slide img {
+    max-height: 300px; /* починає зменшуватись з 768px */
+    min-height: 180px; /* не стає занадто малим */
+    object-fit: contain;
+    height: auto; /* ✅ обов’язково, щоб не втрачати адаптивність */
+  }
+}
+
+/* Для найменших екранів — легке додаткове зменшення стрілок */
+@media (max-width: 480px) {
+  .carousel-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 1rem;
   }
 }
