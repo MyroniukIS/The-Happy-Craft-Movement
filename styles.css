@@ -363,6 +363,35 @@ section > .container > h2 {
   font-size: 1rem;
 }
 
+/* CTA container inside workshop cards: stack buttons, center them horizontally */
+.workshop-ctas {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* center horizontally */
+  justify-content: center;
+  gap: 10px; /* vertical spacing between buttons */
+  margin-top: 12px;
+}
+
+/* Ensure WhatsApp button matches width behavior and centers nicely when stacked */
+.workshop-ctas .whatsapp-btn,
+.workshop-ctas .download-materials {
+  display: inline-flex;
+  justify-content: center;
+}
+
+/* On very narrow cards allow buttons to wrap but remain centered */
+@media (max-width: 360px) {
+  .workshop-ctas {
+    gap: 8px;
+  }
+  .workshop-ctas .whatsapp-btn,
+  .workshop-ctas .download-materials {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
 /* Address link */
 /* clickable map link inside address */
 .map-link {
@@ -407,6 +436,48 @@ section > .container > h2 {
 
 .whatsapp-btn i {
   font-size: 1.2rem;
+}
+
+/* Download materials button - visually similar to .whatsapp-btn but uses an accent color */
+.download-materials {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--accent-2); /* use an accent color so it's distinct */
+  color: var(--white);
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 16px;
+  border-radius: 30px;
+  margin-top: 12px;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.download-materials:hover,
+.download-materials:focus {
+  background-color: color-mix(in srgb, var(--accent-2) 80%, black 20%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+  outline: none;
+}
+
+.download-materials:focus-visible {
+  outline: 3px solid rgba(228, 90, 146, 0.22);
+  outline-offset: 3px;
+}
+
+/* Small helpers to ensure button wraps nicely on narrow cards */
+.workshop-card .download-materials {
+  width: auto;
+  white-space: nowrap;
+}
+
+/* If color-mix isn't supported in older browsers, provide a fallback using a slightly darker accent via filter */
+@supports not (color-mix(in srgb, var(--accent-2) 80%, black 20%)) {
+  .download-materials:hover,
+  .download-materials:focus {
+    filter: brightness(0.95);
+  }
 }
 
 /* ---------- Responsive Design ---------- */
