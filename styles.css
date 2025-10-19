@@ -139,6 +139,12 @@ body {
 .logo img {
   display: block;
   border-radius: 8px;
+  /* Fallback explicit sizes (used by older browsers like IE11) */
+  width: 90px;
+  height: auto; /* keep natural aspect ratio */
+  max-height: 130px;
+  object-fit: contain; /* preserve logo aspect */
+  transition: width 260ms ease, height 260ms ease;
 }
 
 /* .site-title-wrapper {
@@ -188,8 +194,9 @@ body {
 
   .logo img {
     margin-bottom: 10px;
-    width: 60px;
-    height: 60px;
+    /* slightly larger on small phones for better visibility */
+    width: 72px;
+    height: 72px;
   }
 
   .site-title {
@@ -198,6 +205,42 @@ body {
 
   .site-subtitle {
     font-size: clamp(1rem, 3vw, 1.4rem);
+  }
+}
+
+/* For modern browsers: smooth, responsive size using clamp() */
+/* clamp(min, preferred, max): min 72px, preferred 6vw, max 130px */
+@supports (width: clamp(1px, 1vw, 1px)) {
+  .logo img {
+    width: clamp(72px, 6vw, 130px);
+    height: auto; /* keep aspect ratio */
+    max-height: 130px;
+  }
+}
+
+/* Note on IE11: it doesn't support clamp() or @supports fully.
+   Because explicit fallback sizes are declared above, IE11 will
+   use those values. To match current behavior in IE11 across three
+   widths, keep the explicit breakpoint rules (these will be the
+   fallback when clamp isn't available). */
+@media (min-width: 601px) and (max-width: 991px) {
+  .logo img {
+    width: 96px;
+    height: auto;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .logo img {
+    width: 110px;
+    height: auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  .logo img {
+    width: 130px;
+    height: auto;
   }
 }
 
