@@ -25,6 +25,33 @@
   --card-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
+/* Default carousel variables (global) so all carousels inherit consistent sizes */
+:root {
+  --carousel-arrow-size: 40px;
+  --carousel-arrow-font-size: 1.5rem;
+  --carousel-arrow-offset: 10px;
+  --carousel-horizontal-padding: 20px;
+}
+
+/* Responsive overrides for carousel variables so both carousels stay in sync */
+@media (max-width: 768px) {
+  :root {
+    --carousel-arrow-size: 34px;
+    --carousel-arrow-font-size: 1.2rem;
+    --carousel-arrow-offset: 8px;
+    --carousel-horizontal-padding: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --carousel-arrow-size: 30px;
+    --carousel-arrow-font-size: 1rem;
+    --carousel-arrow-offset: 6px;
+    --carousel-horizontal-padding: 12px;
+  }
+}
+
 /* ========== Base ========== */
 * {
   box-sizing: border-box;
@@ -441,8 +468,7 @@ section > .container > h2 {
   font-weight: 700;
   color: var(--accent-2);
 }
-
-/* ========== Testimonials Carousel ========== */
+/* Testimonials carousel container */
 .testimonials-carousel {
   position: relative;
   max-width: 800px;
@@ -485,16 +511,11 @@ section > .container > h2 {
 
 /* Reuse arrow buttons from gallery carousel */
 .testimonials-carousel .carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  /* visual styling only; size/position inherited from .carousel variables */
   background: rgba(62, 30, 104, 0.7);
   color: var(--white);
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 1.5rem;
   cursor: pointer;
   z-index: 2;
   transition: background 0.3s ease;
@@ -505,22 +526,20 @@ section > .container > h2 {
 }
 
 .testimonials-carousel .carousel-btn.prev {
-  left: 10px;
+  left: var(--carousel-arrow-offset);
 }
 
 .testimonials-carousel .carousel-btn.next {
-  right: 10px;
+  right: var(--carousel-arrow-offset);
 }
 
 /* Responsive adjustments */
 @media (max-width: 600px) {
   .testimonials-carousel .carousel-btn {
-    /* width: 32px; */
-    /* height: 32px; */
-    /* font-size: 1.2rem; */
-    width: 30px;
-    height: 30px;
-    font-size: 1rem;
+    /* use shared variables so buttons match gallery behavior */
+    width: var(--carousel-arrow-size);
+    height: var(--carousel-arrow-size);
+    font-size: var(--carousel-arrow-font-size);
   }
 
   .testimonial {
@@ -528,6 +547,46 @@ section > .container > h2 {
     /* max-width: 95%; */
     flex: 0 0 90%;
     max-width: 90%;
+  }
+}
+
+/* ============================
+   Testimonials carousel: improved small-screen behaviour
+   Scope: affects only .testimonials-carousel and its direct children
+   - reduce visible testimonial width on <=768px to avoid arrows overlapping
+   - reserve horizontal padding for arrows so they sit outside content
+   - slightly shrink arrow buttons and nudge them outward where needed
+   ============================ */
+@media (max-width: 768px) {
+  .testimonials-carousel {
+    padding: 0 36px; /* reserve space for arrows */
+    box-sizing: border-box;
+  }
+
+  .testimonials-carousel .carousel-track {
+    padding: 0; /* consistent with the gallery approach */
+    gap: 0;
+  }
+
+  .testimonials-carousel .carousel-slide {
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Make the testimonial card a bit narrower than the viewport so arrows don't overlay */
+  .testimonials-carousel .testimonial {
+    flex: 0 0 88%;
+    max-width: 88%;
+    margin: 0 auto;
+    box-shadow: var(--card-shadow);
+  }
+
+  /* Move arrows by changing the container variables so both carousels stay symmetric */
+  .testimonials-carousel {
+    --carousel-arrow-size: 34px;
+    --carousel-arrow-font-size: 1.2rem;
+    --carousel-arrow-offset: 8px;
   }
 }
 
@@ -628,6 +687,8 @@ section > .container > h2 {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  /* keep overflow visible by default; we'll enable hidden when doing transforms below */
+  overflow: visible;
 }
 
 .contact a {
@@ -636,8 +697,111 @@ section > .container > h2 {
 }
 
 .join-cta {
+  /* Use flex column so we can control horizontal alignment precisely */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* right aligned on desktop/tablet */
   text-align: right;
   max-width: 420px;
+  margin-left: auto; /* push it to the right within .footer-inner */
+  transition: transform 300ms ease, max-width 220ms ease, align-items 220ms ease;
+}
+
+/* Footer responsive behavior
+   - >= 760px: keep right alignment (default)
+   - 760px -> 600px: progressively move the join-cta toward the left (via translateX)
+   - < 520px: stack footer content and left-align everything for mobile
+*/
+
+/* Progressive movement: start at large desktop widths and step toward 600px
+   Strategy:
+   - Keep contact info left aligned at all sizes >600px
+   - Keep join-cta visually right-aligned (margin-left:auto / align-items:flex-end)
+   - Gradually reduce max-width and apply conservative translateX values so the block
+     moves toward the left as the viewport narrows. We keep .footer-inner overflow:hidden
+     while transforms are active to avoid visible overflow.
+*/
+
+/* Ensure left-aligned contact info always */
+.contact {
+  text-align: left;
+}
+
+/* Movement active: start at large desktop widths (1400px) and progress down to 600px */
+@media (max-width: 1400px) {
+  .footer-inner {
+    overflow: hidden; /* hide any transient overflow while we translate */
+  }
+
+  .join-cta {
+    max-width: 380px;
+    transform: translateX(-3%);
+  }
+}
+
+@media (max-width: 1200px) {
+  .join-cta {
+    max-width: 360px;
+    transform: translateX(-8%);
+  }
+}
+
+@media (max-width: 992px) {
+  .join-cta {
+    max-width: 340px;
+    transform: translateX(-12%);
+  }
+}
+
+@media (max-width: 768px) {
+  .join-cta {
+    max-width: 320px;
+    transform: translateX(-18%);
+  }
+}
+
+@media (max-width: 640px) {
+  .join-cta {
+    max-width: 300px;
+    transform: translateX(-24%);
+  }
+}
+
+/* At 600px and below: stack and left-align everything (mobile behaviour requested)
+   This ensures all footer blocks sit on the left and the join-cta no longer translates.
+*/
+@media (max-width: 600px) {
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* left align everything */
+    gap: var(--space-sm);
+    overflow: visible;
+  }
+
+  .join-cta {
+    transform: none;
+    text-align: left; /* left align join CTA on small screens */
+    align-items: flex-start;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-top: 0.25rem;
+  }
+
+  .whatsapp-link {
+    align-self: flex-start; /* make sure the button stays left on mobile */
+  }
+
+  .contact {
+    width: 100%;
+    text-align: left;
+  }
+}
+
+/* Ensure the footer-bottom text (year/copyright) stays left-aligned on larger screens */
+.footer-bottom p {
+  text-align: left;
 }
 
 /* WhatsApp link */
@@ -746,6 +910,12 @@ section > .container > h2 {
   max-width: 800px; /* same width as testimonials */
   margin: 0 auto;
   overflow: hidden; /* hide parts of other slides */
+  /* arrow controls: configurable variables to keep symmetry across carousels */
+  --carousel-arrow-size: 40px;
+  --carousel-arrow-font-size: 1.5rem;
+  --carousel-arrow-offset: 10px; /* horizontal distance from container edge */
+  /* horizontal padding reserved for arrows (used by components and responsive adjustments) */
+  --carousel-horizontal-padding: 20px;
 }
 
 /* Track container */
@@ -758,7 +928,7 @@ section > .container > h2 {
 .carousel-track {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  padding: 0 20px;
+  padding: 0 var(--carousel-horizontal-padding);
   gap: 20px; /* додає проміжок між слайдами */
 }
 
@@ -795,24 +965,27 @@ section > .container > h2 {
   color: var(--white);
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 1.5rem;
+  width: var(--carousel-arrow-size);
+  height: var(--carousel-arrow-size);
+  font-size: var(--carousel-arrow-font-size);
   cursor: pointer;
-  z-index: 2;
+  z-index: 9999; /* ensure arrows float above other elements */
+  overflow: visible; /* allow hover visuals to extend */
   transition: background 0.3s ease;
 }
 
 .carousel-btn:hover {
   background: rgba(228, 90, 146, 0.85);
+  /* subtle glow that won't be clipped when overflow: visible is set */
+  box-shadow: 0 6px 18px rgba(228, 90, 146, 0.18), 0 0 0 6px rgba(228, 90, 146, 0.08);
 }
 
 .carousel-btn.prev {
-  left: 10px;
+  left: var(--carousel-arrow-offset);
 }
 
 .carousel-btn.next {
-  right: 10px;
+  right: var(--carousel-arrow-offset);
 }
 
 /* Responsive adjustments for smaller screens */
@@ -821,10 +994,12 @@ section > .container > h2 {
   .carousel-slide {
     min-width: 90%;
   }
-  .carousel-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 1.2rem;
+  /* smaller arrow variables for medium/smaller screens */
+  .carousel {
+    --carousel-arrow-size: 34px;
+    --carousel-arrow-font-size: 1.2rem;
+    --carousel-arrow-offset: 8px;
+    --carousel-horizontal-padding: 18px;
   }
 
   /* .carousel-slide img {
@@ -843,7 +1018,7 @@ section > .container > h2 {
 .carousel-track {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  padding: 0 20px;
+  padding: 0 var(--carousel-horizontal-padding);
   gap: 20px; /* додає проміжок між слайдами */
 }
 
@@ -853,41 +1028,14 @@ section > .container > h2 {
   overflow: hidden;
 }
 
-/* Buttons */
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(62, 30, 104, 0.7); /* semi-transparent purple */
-  color: var(--white);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  font-size: 1.5rem;
-  cursor: pointer;
-  z-index: 2;
-  transition: background 0.3s ease;
-}
-
-.carousel-btn:hover {
-  background: rgba(228, 90, 146, 0.85);
-}
-
-.carousel-btn.prev {
-  left: 10px;
-}
-
-.carousel-btn.next {
-  right: 10px;
-}
 
 /* Mobile adjustments */
 @media (max-width: 600px) {
   .carousel-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 1.2rem;
+    /* keep using variables (will be overridden by the .carousel media block for 600/480 if needed) */
+    width: var(--carousel-arrow-size);
+    height: var(--carousel-arrow-size);
+    font-size: var(--carousel-arrow-font-size);
   }
 }
 
@@ -897,25 +1045,28 @@ section > .container > h2 {
 @media (max-width: 600px) {
   .carousel-btn.prev {
     /* left: -5px; /* трохи виносимо за межу контейнера */
-    left: -8px;
+    left: calc(var(--carousel-arrow-offset) * -1); /* keep proportional if we want to nudge outside */
   }
 
   .carousel-btn.next {
     /* right: -5px; /* те саме для правої */
-    right: -8px;
+    right: calc(var(--carousel-arrow-offset) * -1);
   }
 
   .carousel-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 1.2rem;
+    /* use shared variables so sizes match across carousels */
+    width: var(--carousel-arrow-size);
+    height: var(--carousel-arrow-size);
+    font-size: var(--carousel-arrow-font-size);
     background: rgba(62, 30, 104, 0.6); /* трохи м’якше */
-    overflow: visible; /* щоб псевдо-елементи або hover-круги не обрізались */
+    overflow: visible; /* allow hover visuals to extend beyond the button */
   }
 
   .carousel {
-    padding: 0 10px;
-    overflow: hidden; /* ✅ знову приховуємо сусідів */
+    padding: 0 calc(var(--carousel-horizontal-padding) / 2);
+    /* allow arrow hover visuals to show outside the outer container while
+       inner .carousel-track-container still hides neighbouring slides */
+    overflow: visible;
   }
 
   /* .carousel-track {
@@ -937,13 +1088,11 @@ section > .container > h2 {
 
 /* Extra-small devices (phones under 400px wide) */
 @media (max-width: 400px) {
-  .carousel-btn.prev {
-    /* left: -10px; */
-    left: -12px;
-  }
-  .carousel-btn.next {
-    /* right: -10px; */
-    right: -12px;
+  .carousel {
+    --carousel-arrow-size: 30px;
+    --carousel-arrow-font-size: 1rem;
+    --carousel-arrow-offset: 6px;
+    --carousel-horizontal-padding: 12px;
   }
 }
 
@@ -959,9 +1108,99 @@ section > .container > h2 {
 
 /* Для найменших екранів — легке додаткове зменшення стрілок */
 @media (max-width: 480px) {
-  .carousel-btn {
-    width: 28px;
-    height: 28px;
-    font-size: 1rem;
+  .carousel {
+    --carousel-arrow-size: 30px;
+    --carousel-arrow-font-size: 1rem;
+    --carousel-arrow-offset: 6px;
+  }
+}
+
+/* ============================
+   Gallery-section specific fixes
+   Scoped rules to avoid impacting other carousels (testimonials, etc.)
+   - ensure only one slide is visible (no peeking neighbors)
+   - provide consistent slide height to avoid layout jumps when images differ
+   - move arrows outside the image area on small screens to avoid overlap
+   If you prefer images not to be cropped, swap `object-fit: cover` -> `contain`
+   and remove the fixed height; I've left a comment where to change that.
+   ============================ */
+.gallery-section .carousel {
+  /* Keep the carousel centered while reserving horizontal space for arrows */
+  padding: 0 48px; /* gives room for arrows without overlapping slides */
+  box-sizing: border-box;
+  max-width: 900px; /* slightly wider option for gallery */
+}
+
+.gallery-section .carousel-track {
+  /* Remove internal padding/gap so slides sit flush and JS width math matches */
+  padding: 0;
+  gap: 0;
+}
+
+.gallery-section .carousel-slide {
+  min-width: 100%; /* always one slide per view */
+  padding: 0;
+  overflow: hidden; /* hide any overflow from images */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Fixed height keeps the carousel height stable even if images differ */
+  height: 420px; /* desktop default; adjusted in media queries below */
+}
+
+.gallery-section .carousel-slide img {
+  width: auto; /* allow image to keep natural width while fitting inside box */
+  max-width: 100%;
+  height: auto;
+  max-height: 100%;
+  object-fit: contain; /* show whole image without cropping */
+  display: block;
+  background: var(--bg-dark); /* pad background same as main site background */
+  box-shadow: var(--card-shadow); /* subtle shadow for depth */
+  border-radius: 6px;
+  padding: 8px; /* small inner padding to create a visual 'cushion' */
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .gallery-section .carousel {
+    padding: 0 36px;
+  }
+
+  .gallery-section .carousel-slide {
+    height: 360px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* On tablets and small desktops arrows sit closer and won't cover image */
+  .gallery-section .carousel {
+    padding: 0 28px;
+  }
+
+  .gallery-section .carousel-slide {
+    height: 300px;
+    min-width: 100%;
+  }
+
+  /* set arrow offset via variable so both carousels behave symmetrically */
+  .gallery-section .carousel {
+    --carousel-arrow-offset: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-section .carousel {
+    padding: 0 12px; /* conserve space on small phones */
+  }
+
+  .gallery-section .carousel-slide {
+    height: 220px; /* small phone height */
+  }
+  /* adjust arrow variables for small phones so both carousels match */
+  .gallery-section .carousel {
+    --carousel-arrow-size: 30px;
+    --carousel-arrow-font-size: 1rem;
+    --carousel-arrow-offset: 6px;
   }
 }
