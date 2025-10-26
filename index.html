@@ -880,13 +880,34 @@ node generate-gallery.js
           and we'll get back to you. Fields marked with * are required.
         </p>
 
-        <form id="contact-form" class="contact-form" novalidate method="POST" name="contact-form" data-netlify="true">
-          <!-- Netlify form name for serverless capture -->
+        <form
+          id="contact-form"
+          class="contact-form"
+          novalidate
+          data-netlify="true"
+        >
+          <!-- Netlify form name for serverless capture. The 'name' attribute is crucial. -->
           <input type="hidden" name="form-name" value="contact-form" />
           <!-- Honeypot field (hidden from users). Bots often fill fields named "website". Server rejects if non-empty. -->
-          <div style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+          <div
+            style="
+              position: absolute;
+              left: -9999px;
+              top: auto;
+              width: 1px;
+              height: 1px;
+              overflow: hidden;
+            "
+            aria-hidden="true"
+          >
             <label for="website">Website</label>
-            <input id="website" name="website" type="text" autocomplete="off" tabindex="-1" />
+            <input
+              id="website"
+              name="website"
+              type="text"
+              autocomplete="off"
+              tabindex="-1"
+            />
           </div>
           <div class="form-row">
             <label for="firstName">First name *</label>
