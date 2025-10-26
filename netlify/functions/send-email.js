@@ -119,9 +119,8 @@ exports.handler = async function (event, context) {
       subject: `Website message from ${escapeHtml(firstName)} ${escapeHtml(
         lastName || ""
       )}`,
-      text: `You received a message from your website 
-The Happy Craft Movement:\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`,
-      html: `<p>You received a message from your website:</p>
+      text: `You received a message from your website ${SENDER_NAME}:\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`,
+      html: `<p>You received a message from your website ${SENDER_NAME}:</p>
              <ul>
                <li><strong>Name:</strong> ${escapeHtml(firstName)} ${escapeHtml(
         lastName
