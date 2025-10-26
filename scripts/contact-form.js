@@ -49,9 +49,12 @@
 
   // Determine endpoint and mode. If data-endpoint is provided, use JSON POST there.
   // If form is configured for Netlify (data-netlify="true"), submit as form-encoded to the current site so Netlify captures it.
-  const hasCustomEndpoint = Boolean(form.dataset.endpoint);
-  const isNetlifyForm = form.hasAttribute('data-netlify') || form.dataset.netlify === 'true';
-  const endpoint = hasCustomEndpoint ? form.dataset.endpoint : (isNetlifyForm ? (form.action || window.location.pathname) : DEFAULT_ENDPOINT);
+    const hasCustomEndpoint = Boolean(form.dataset.endpoint);
+    const isNetlifyForm = form.hasAttribute('data-netlify') || form.dataset.netlify === 'true';
+    // For Netlify Forms, POST to site root ('/') is most reliable for capture (some setups use /index.html)
+    const endpoint = hasCustomEndpoint
+      ? form.dataset.endpoint
+      : (isNetlifyForm ? (form.action || '/') : DEFAULT_ENDPOINT);
     const firstName = $('#firstName');
     const lastName = $('#lastName');
     const email = $('#email');
@@ -141,7 +144,8 @@
             res = await fetch(endpoint, {
               method: 'POST',
               headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
               },
               body: formPayload.toString(),
             });
@@ -158,7 +162,19 @@
           }
 
         if (res.ok) {
-          const data = await res.json();
+          // Netlify Forms often returns HTML (redirect page) rather than JSON.
+          // Try to parse JSON, but fall back to text so we don't throw a syntax error.
+          let successBody;
+          try {
+            successBody = await res.json();
+          } catch (err) {
+            try {
+              successBody = await res.text();
+            } catch (e) {
+              successBody = {};
+            }
+          }
+          console.log('Form submission success response:', successBody);
           statusEl.textContent = 'Message sent — thank you!';
           statusEl.classList.add('form-status--success');
           form.reset();
@@ -174,7 +190,19 @@
             statusEl.textContent = 'Please check the form and try again.';
           }
         } else {
-          const body = await res.json().catch(() => ({}));
+          // Try to read response body (JSON or text) for better diagnostics
+          let body = {};
+          try {
+            body = await res.json();
+          } catch (e) {
+            try {
+              const txt = await res.text();
+              body = { error: txt };
+            } catch (e2) {
+              body = { error: 'Unknown error' };
+            }
+          }
+          console.error('Form submission failed:', res.status, body);
           statusEl.textContent = body.error || 'Failed to send message. Please try later.';
         }
       } catch (err) {
