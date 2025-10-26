@@ -454,7 +454,8 @@ section > .container > h2 {
   padding: 10px 16px;
   border-radius: 30px;
   margin-top: 12px;
-  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  transition: background-color 0.2s ease, transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .download-materials:hover,
@@ -805,7 +806,7 @@ section > .container > h2 {
  */
 .contact-section {
   padding: var(--space-lg) 0;
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent);
   margin-top: var(--space-lg);
 }
 
@@ -824,7 +825,7 @@ section > .container > h2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-md);
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
   padding: var(--space-md);
   border-radius: 12px;
   box-shadow: var(--card-shadow);
@@ -847,13 +848,15 @@ section > .container > h2 {
 .contact-form textarea {
   padding: 10px 12px;
   border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
   color: var(--text-on-dark);
   font-size: 1rem;
 }
 
-.contact-form textarea { resize: vertical; }
+.contact-form textarea {
+  resize: vertical;
+}
 
 .field-error {
   color: var(--color-error);
@@ -864,13 +867,27 @@ section > .container > h2 {
 
 /* Input invalid / error visual state applied by client script via .input-error */
 .input-error {
-  border-color: color-mix(in srgb, var(--color-error) 70%, rgba(255,255,255,0.06) 30%);
-  box-shadow: 0 4px 12px rgba(217,83,79,0.12);
+  border-color: color-mix(
+    in srgb,
+    var(--color-error) 70%,
+    rgba(255, 255, 255, 0.06) 30%
+  );
+  box-shadow: 0 4px 12px rgba(217, 83, 79, 0.12);
 }
 
 .input-error:focus {
   outline: 3px solid color-mix(in srgb, var(--color-error) 12%, transparent);
   outline-offset: 2px;
+}
+
+/* Success state for the whole form container */
+.form-success-highlight {
+  /* Adds a green glow around the form, preserving the original shadow */
+  box-shadow: 0 0 0 3px
+      color-mix(in srgb, var(--color-success) 40%, transparent),
+    var(--card-shadow);
+  /* Smooth transition for the effect */
+  transition: box-shadow 300ms ease-in-out;
 }
 
 .form-actions {
@@ -890,9 +907,15 @@ section > .container > h2 {
   cursor: pointer;
 }
 
-.primary-btn[disabled] { opacity: 0.6; cursor: not-allowed; }
+.primary-btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 
-.form-status { margin: 0; color: var(--text-on-dark); }
+.form-status {
+  margin: 0;
+  color: var(--text-on-dark);
+}
 
 /* Success state for the small inline form status shown after a successful send */
 .form-status--success {
@@ -906,8 +929,12 @@ section > .container > h2 {
 
 /* Responsive: single column on smaller screens */
 @media (max-width: 768px) {
-  .contact-form { grid-template-columns: 1fr; }
-  .form-actions { justify-content: center; }
+  .contact-form {
+    grid-template-columns: 1fr;
+  }
+  .form-actions {
+    justify-content: center;
+  }
 }
 
 .footer-inner {
@@ -1206,7 +1233,8 @@ section > .container > h2 {
 .carousel-btn:hover {
   background: rgba(228, 90, 146, 0.85);
   /* subtle glow that won't be clipped when overflow: visible is set */
-  box-shadow: 0 6px 18px rgba(228, 90, 146, 0.18), 0 0 0 6px rgba(228, 90, 146, 0.08);
+  box-shadow: 0 6px 18px rgba(228, 90, 146, 0.18),
+    0 0 0 6px rgba(228, 90, 146, 0.08);
 }
 
 .carousel-btn.prev {
@@ -1257,7 +1285,6 @@ section > .container > h2 {
   overflow: hidden;
 }
 
-
 /* Mobile adjustments */
 @media (max-width: 600px) {
   .carousel-btn {
@@ -1274,7 +1301,9 @@ section > .container > h2 {
 @media (max-width: 600px) {
   .carousel-btn.prev {
     /* left: -5px; /* трохи виносимо за межу контейнера */
-    left: calc(var(--carousel-arrow-offset) * -1); /* keep proportional if we want to nudge outside */
+    left: calc(
+      var(--carousel-arrow-offset) * -1
+    ); /* keep proportional if we want to nudge outside */
   }
 
   .carousel-btn.next {

@@ -32,6 +32,8 @@
     // remove any previous success class so message returns to normal
     if (status) status.classList.remove("form-status--success");
     // remove input visual state from any fields
+    const form = $("#contact-form");
+    if (form) form.classList.remove("form-success-highlight");
     $all("#contact-form input, #contact-form textarea").forEach((f) =>
       f.classList.remove("input-error")
     );
@@ -181,6 +183,7 @@
           }
           console.log("Form submission success response:", successBody);
           statusEl.textContent = "Message sent — thank you!";
+          form.classList.add("form-success-highlight");
           statusEl.classList.add("form-status--success");
           form.reset();
           // focus the first field for convenience
