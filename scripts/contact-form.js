@@ -147,16 +147,15 @@
       try {
         let res;
         if (isNetlifyForm && !hasCustomEndpoint) {
-          // For Netlify AJAX forms, we need to submit as form-urlencoded.
-          // The easiest way is to use URLSearchParams and include the 'form-name' field.
-          const formData = new URLSearchParams(new FormData(form));
-
+          // This block is now less likely to be used due to data-endpoint, but kept for fallback.
+          // Netlify Forms: send application/x-www-form-urlencoded
           res = await fetch(endpoint, {
             method: "POST",
-            body: formData,
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(new FormData(form)).toString(),
           });
         } else {
-          // Default: JSON POST to custom endpoint or local default
+          // JSON POST to custom endpoint (like /.netlify/functions/send-email) or local default
           res = await fetch(endpoint, {
             method: "POST",
             headers: {
