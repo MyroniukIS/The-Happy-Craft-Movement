@@ -47,7 +47,11 @@
     const form = $('#contact-form');
     if (!form) return;
 
-    const endpoint = form.dataset.endpoint || DEFAULT_ENDPOINT;
+  // Determine endpoint and mode. If data-endpoint is provided, use JSON POST there.
+  // If form is configured for Netlify (data-netlify="true"), submit as form-encoded to the current site so Netlify captures it.
+  const hasCustomEndpoint = Boolean(form.dataset.endpoint);
+  const isNetlifyForm = form.hasAttribute('data-netlify') || form.dataset.netlify === 'true';
+  const endpoint = hasCustomEndpoint ? form.dataset.endpoint : (isNetlifyForm ? (form.action || window.location.pathname) : DEFAULT_ENDPOINT);
     const firstName = $('#firstName');
     const lastName = $('#lastName');
     const email = $('#email');
@@ -125,14 +129,33 @@
       };
 
       try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
+          let res;
+          if (isNetlifyForm && !hasCustomEndpoint) {
+            // Netlify Forms: send application/x-www-form-urlencoded including form-name
+            const formName = form.getAttribute('name') || (document.querySelector('input[name="form-name"]') || {}).value || 'contact-form';
+            const formPayload = new URLSearchParams();
+            formPayload.append('form-name', formName);
+            // append all fields
+            Object.keys(payload).forEach((k) => formPayload.append(k, payload[k] || ''));
+
+            res = await fetch(endpoint, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+              },
+              body: formPayload.toString(),
+            });
+          } else {
+            // Default: JSON POST to custom endpoint or local default
+            res = await fetch(endpoint, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+              },
+              body: JSON.stringify(payload),
+            });
+          }
 
         if (res.ok) {
           const data = await res.json();
