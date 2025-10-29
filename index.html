@@ -1080,82 +1080,108 @@ node generate-gallery.js
 
     <script>
       // ===== Workshop Gallery Carousel Logic =====
-      const track = document.querySelector(".carousel-track");
-      const slides = Array.from(track.children);
-      const nextButton = document.querySelector(".carousel-btn.next");
-      const prevButton = document.querySelector(".carousel-btn.prev");
+      (function () {
+        const carousel = document.querySelector(".gallery-section .carousel");
+        const track = carousel.querySelector(".carousel-track");
+        const slides = Array.from(track.children);
+        const nextButton = carousel.querySelector(".carousel-btn.next");
+        const prevButton = carousel.querySelector(".carousel-btn.prev");
 
-      let currentSlideIndex = 0;
+        if (!track || slides.length === 0) return; // Exit if no slides
 
-      // Function to move to specific slide
-      function moveToSlide(index) {
-        const slideWidth = slides[0].getBoundingClientRect().width;
-        track.style.transform = `translateX(-${index * slideWidth}px)`;
-        slides.forEach((slide) => slide.classList.remove("current-slide"));
-        slides[index].classList.add("current-slide");
-        currentSlideIndex = index;
-      }
+        let currentSlideIndex = 0;
+        const autoplayInterval = 5000; // Час у мілісекундах (7000 = 7 секунд)
+        let autoplayTimer;
 
-      // Next button
-      nextButton.addEventListener("click", () => {
-        const nextIndex = (currentSlideIndex + 1) % slides.length;
-        moveToSlide(nextIndex);
-      });
+        const moveToSlide = (index) => {
+          const slideWidth = slides[0].getBoundingClientRect().width;
+          track.style.transform = `translateX(-${index * slideWidth}px)`;
+          slides.forEach((slide) => slide.classList.remove("current-slide"));
+          slides[index].classList.add("current-slide");
+          currentSlideIndex = index;
+        };
 
-      // Prev button
-      prevButton.addEventListener("click", () => {
-        const prevIndex =
-          (currentSlideIndex - 1 + slides.length) % slides.length;
-        moveToSlide(prevIndex);
-      });
+        const startAutoplay = () => {
+          stopAutoplay(); // Clear any existing timer
+          autoplayTimer = setInterval(() => {
+            const nextIndex = (currentSlideIndex + 1) % slides.length;
+            moveToSlide(nextIndex);
+          }, autoplayInterval);
+        };
 
-      // Responsive resize fix
-      window.addEventListener("resize", () => moveToSlide(currentSlideIndex));
+        const stopAutoplay = () => {
+          clearInterval(autoplayTimer);
+        };
+
+        nextButton.addEventListener("click", () => {
+          const nextIndex = (currentSlideIndex + 1) % slides.length;
+          moveToSlide(nextIndex);
+        });
+
+        prevButton.addEventListener("click", () => {
+          const prevIndex =
+            (currentSlideIndex - 1 + slides.length) % slides.length;
+          moveToSlide(prevIndex);
+        });
+
+        // Pause on hover, resume on leave
+        carousel.addEventListener("mouseenter", stopAutoplay);
+        carousel.addEventListener("mouseleave", startAutoplay);
+
+        window.addEventListener("resize", () => moveToSlide(currentSlideIndex));
+        startAutoplay(); // Start autoplay on page load
+      })();
     </script>
 
     <script>
       // ===== Testimonials Carousel Logic =====
-      const testimonialTrack = document.querySelector(
-        ".testimonials-carousel .carousel-track"
-      );
-      const testimonialSlides = Array.from(testimonialTrack.children);
-      const nextBtn = document.querySelector(
-        ".testimonials-carousel .carousel-btn.next"
-      );
-      const prevBtn = document.querySelector(
-        ".testimonials-carousel .carousel-btn.prev"
-      );
+      (function () {
+        const carousel = document.querySelector(".testimonials-carousel");
+        const track = carousel.querySelector(".carousel-track");
+        const slides = Array.from(track.children);
+        const nextButton = carousel.querySelector(".carousel-btn.next");
+        const prevButton = carousel.querySelector(".carousel-btn.prev");
 
-      let currentTestimonialIndex = 0;
+        if (!track || slides.length === 0) return;
 
-      function moveToTestimonial(index) {
-        const slideWidth = testimonialSlides[0].getBoundingClientRect().width;
-        testimonialTrack.style.transform = `translateX(-${
-          index * slideWidth
-        }px)`;
-        testimonialSlides.forEach((slide) =>
-          slide.classList.remove("current-slide")
-        );
-        testimonialSlides[index].classList.add("current-slide");
-        currentTestimonialIndex = index;
-      }
+        let currentSlideIndex = 0;
+        const autoplayInterval = 5000; // Інтервал 5 секунд
+        let autoplayTimer;
 
-      nextBtn.addEventListener("click", () => {
-        const nextIndex =
-          (currentTestimonialIndex + 1) % testimonialSlides.length;
-        moveToTestimonial(nextIndex);
-      });
+        const moveToSlide = (index) => {
+          const slideWidth = slides[0].getBoundingClientRect().width;
+          track.style.transform = `translateX(-${index * slideWidth}px)`;
+          slides.forEach((slide) => slide.classList.remove("current-slide"));
+          slides[index].classList.add("current-slide");
+          currentSlideIndex = index;
+        };
 
-      prevBtn.addEventListener("click", () => {
-        const prevIndex =
-          (currentTestimonialIndex - 1 + testimonialSlides.length) %
-          testimonialSlides.length;
-        moveToTestimonial(prevIndex);
-      });
+        const startAutoplay = () => {
+          stopAutoplay();
+          autoplayTimer = setInterval(() => {
+            const nextIndex = (currentSlideIndex + 1) % slides.length;
+            moveToSlide(nextIndex);
+          }, autoplayInterval);
+        };
 
-      window.addEventListener("resize", () =>
-        moveToTestimonial(currentTestimonialIndex)
-      );
+        const stopAutoplay = () => {
+          clearInterval(autoplayTimer);
+        };
+
+        nextButton.addEventListener("click", () => {
+          moveToSlide((currentSlideIndex + 1) % slides.length);
+        });
+
+        prevButton.addEventListener("click", () => {
+          moveToSlide((currentSlideIndex - 1 + slides.length) % slides.length);
+        });
+
+        carousel.addEventListener("mouseenter", stopAutoplay);
+        carousel.addEventListener("mouseleave", startAutoplay);
+
+        window.addEventListener("resize", () => moveToSlide(currentSlideIndex));
+        startAutoplay();
+      })();
     </script>
 
     <!-- Contact form client script (validate + POST to server). Set data-endpoint on form to change target. -->
