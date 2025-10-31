@@ -12,6 +12,7 @@
   --accent-2: #e45a92; /* secondary accent */
   --white: #ffffff;
   --max-width: 1200px;
+  --placeholder-color: color-mix(in srgb, var(--text-on-dark) 50%, transparent);
 
   /* spacing scale */
   --space-xs: 6px;
@@ -117,6 +118,11 @@ body {
   margin: -1px;
 }
 
+/* Utility to prevent body scroll when mobile menu is open */
+.no-scroll {
+  overflow: hidden;
+}
+
 /* ========== Header ========== */
 .site-header {
   padding: var(--space-sm) 0;
@@ -136,6 +142,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-start; /* логотип залишається зліва */
+  position: relative; /* For mobile nav positioning */
   gap: var(--space-md);
   text-align: left;
 }
@@ -161,7 +168,13 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 10px;
+  /* Add padding to prevent title from overlapping with the burger button */
+  padding-right: 44px;
+}
+
+@media (max-width: 768px) {
+  .site-title-wrapper {
+  }
 }
 
 /* Pacifico font for title, larger */
@@ -194,6 +207,11 @@ body {
     flex-direction: row; /* залишається горизонтально */
     align-items: center;
     justify-content: flex-start;
+  }
+
+  .site-header .container {
+    /* Ensure button doesn't cause overflow on small screens */
+    position: relative;
   }
 
   .logo img {
@@ -252,6 +270,141 @@ body {
 .site-main {
   padding: var(--space-lg) 0;
   color: var(--text-on-dark);
+}
+
+/* When mobile nav is open, overlay main/footer content */
+.mobile-nav[data-visible="true"] ~ .site-main,
+.mobile-nav[data-visible="true"] ~ .site-footer {
+  /* Prevents clicking on content behind the open nav */
+  pointer-events: none;
+}
+
+/* ========== Mobile Navigation ========== */
+.mobile-nav-toggle {
+  display: none; /* Hidden by default on desktop */
+}
+
+.mobile-nav {
+  display: none; /* Hidden by default on desktop */
+}
+
+/* Show and style mobile nav on smaller screens */
+@media (max-width: 768px) {
+  .mobile-nav-toggle {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 9999;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    width: 44px; /* Good touch target size */
+    height: 44px;
+  }
+
+  .mobile-nav-toggle .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Burger icon lines */
+  .mobile-nav-toggle .burger-line,
+  .mobile-nav-toggle::before,
+  .mobile-nav-toggle::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 24px;
+    height: 3px; /* Thicker lines */
+    background-color: var(--text-on-dark);
+    border-radius: 3px; /* Rounded ends */
+    transition: transform 0.3s ease, top 0.3s ease, opacity 0.3s ease;
+    transform: translateX(-50%);
+  }
+
+  .mobile-nav-toggle::before {
+    /* Top line */
+    top: 14px;
+  }
+
+  .mobile-nav-toggle .burger-line {
+    /* Middle line */
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .mobile-nav-toggle::after {
+    /* Bottom line */
+    top: 26px;
+  }
+  .mobile-nav-toggle::after {
+    top: 28px;
+  }
+
+  /* Transform burger to 'X' when menu is open */
+  .mobile-nav-toggle[aria-expanded="true"]::before {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  .mobile-nav-toggle[aria-expanded="true"] .burger-line {
+    opacity: 0; /* Hide middle line */
+  }
+  .mobile-nav-toggle[aria-expanded="true"]::after {
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center links vertically */
+    align-items: center; /* Center links horizontally */
+    gap: var(--space-md);
+    position: fixed;
+    inset: 0; /* Full screen */
+    background: color-mix(
+      in srgb,
+      var(--bg-dark) 75%,
+      transparent
+    ); /* More transparent */
+    backdrop-filter: blur(10px);
+    padding: min(20vh, 10rem) 2rem;
+    transform: translateX(100%);
+    transition: transform 350ms ease-out;
+    z-index: 9998;
+  }
+
+  .mobile-nav[data-visible="true"] {
+    transform: translateX(0%);
+  }
+
+  .mobile-nav a {
+    color: var(--text-on-dark);
+    text-decoration: none;
+    font-size: clamp(1.2rem, 5vw, 1.5rem); /* Responsive font size */
+    text-align: center;
+    font-weight: 500;
+    padding: var(--space-sm);
+    border-radius: var(--radius);
+    transition: background-color 0.2s ease;
+  }
+
+  .mobile-nav a:hover,
+  .mobile-nav a:focus {
+    background-color: rgba(255, 255, 255, 0.05);
+    outline: none;
+  }
 }
 
 /* Section headings */
@@ -852,6 +1005,21 @@ section > .container > h2 {
   background: rgba(255, 255, 255, 0.02);
   color: var(--text-on-dark);
   font-size: 1rem;
+}
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--placeholder-color);
+  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial;
+  opacity: 1; /* Firefox applies a lower opacity by default */
+}
+
+/* Fallback for older browsers that don't support color-mix */
+@supports not (color: color-mix(in srgb, white, black)) {
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder {
+    color: rgba(255, 172, 172, 0.5);
+  }
 }
 
 /* Ховаємо плейсхолдер при фокусі для полів Phone та Message */
@@ -1501,6 +1669,47 @@ section > .container > h2 {
     --carousel-arrow-font-size: 1rem;
     --carousel-arrow-offset: 6px;
   }
+}
+
+/* ========== Scroll to Top Button ========== */
+#scrollToTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Below mobile nav overlay, but above most content */
+
+  /* Visibility transition */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease,
+    background 0.3s ease;
+}
+
+#scrollToTopBtn[data-visible="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+#scrollToTopBtn:hover {
+  background: linear-gradient(135deg, var(--accent-2), var(--accent-1));
+  transform: scale(1.1);
+}
+
+#scrollToTopBtn svg {
+  transform: scale(1.5); /* Make the arrow icon a bit larger */
 }
 
 /* ============================

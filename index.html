@@ -135,6 +135,25 @@
             A place where creativity and happiness come alive
           </h2>
         </div>
+
+        <!-- Mobile Navigation Button -->
+        <button
+          class="mobile-nav-toggle"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Menu</span>
+          <span class="burger-line" aria-hidden="true"></span>
+        </button>
+
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav" id="primary-navigation">
+          <a href="#instructor">Meet your instructor</a>
+          <a href="#workshops">Upcoming Workshops</a>
+          <a href="#gallery">Workshop Gallery</a>
+          <a href="#testimonials">Voices from the circle</a>
+          <a href="#contact">Contact & Feedback</a>
+        </nav>
       </div>
     </header>
 
@@ -180,7 +199,11 @@
       </section>
 
       <!-- Workshops / Upcoming Workshops -->
-      <section class="workshops" id="workshops">
+      <section
+        class="workshops"
+        id="workshops"
+        aria-labelledby="workshops-heading"
+      >
         <h2 class="section-title">Upcoming Workshops</h2>
 
         <div class="workshops-container">
@@ -539,8 +562,11 @@
       </section>
 
       <!-- Gallery / Memories -->
-      <section class="gallery-section" aria-labelledby="gallery-heading">
-        <!-- <h2 id="gallery-heading">Workshop Gallery</h2> -->
+      <section
+        class="gallery-section"
+        id="gallery"
+        aria-labelledby="gallery-heading"
+      >
         <h2 class="section-title">Workshop Gallery</h2>
 
         <div class="container">
@@ -970,6 +996,7 @@ node generate-gallery.js
       <!-- Testimonials / Voices from the circle -->
       <section
         class="testimonials-section"
+        id="testimonials"
         aria-labelledby="testimonials-heading"
       >
         <h2 class="section-title">Voices from the circle</h2>
@@ -1058,7 +1085,11 @@ node generate-gallery.js
     </main>
 
     <!-- Contact / Feedback Section -->
-    <section class="contact-section" aria-labelledby="contact-heading">
+    <section
+      class="contact-section"
+      id="contact"
+      aria-labelledby="contact-heading"
+    >
       <h2 id="contact-heading" class="section-title">Contact & Feedback</h2>
 
       <div class="container contact-inner">
@@ -1280,6 +1311,37 @@ node generate-gallery.js
     </script>
 
     <script>
+      // ===== Mobile Navigation Logic =====
+      (function () {
+        const navToggle = document.querySelector(".mobile-nav-toggle");
+        const primaryNav = document.querySelector(".mobile-nav");
+        const mainContent = document.querySelector(".site-main");
+        const footerContent = document.querySelector(".site-footer");
+
+        navToggle.addEventListener("click", () => {
+          const isVisible = primaryNav.getAttribute("data-visible") === "true";
+          if (isVisible) {
+            primaryNav.setAttribute("data-visible", "false");
+            navToggle.setAttribute("aria-expanded", "false");
+            document.body.classList.remove("no-scroll");
+          } else {
+            primaryNav.setAttribute("data-visible", "true");
+            navToggle.setAttribute("aria-expanded", "true");
+            document.body.classList.add("no-scroll");
+          }
+        });
+
+        // Close menu when a link is clicked
+        primaryNav.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            primaryNav.setAttribute("data-visible", "false");
+            navToggle.setAttribute("aria-expanded", "false");
+            document.body.classList.remove("no-scroll");
+          });
+        });
+      })();
+    </script>
+    <script>
       // ===== Workshop Gallery Carousel Logic =====
       (function () {
         const carousel = document.querySelector(".gallery-section .carousel");
@@ -1387,5 +1449,45 @@ node generate-gallery.js
 
     <!-- Contact form client script (validate + POST to server). Set data-endpoint on form to change target. -->
     <script src="./scripts/contact-form.js"></script>
+
+    <!-- Scroll to Top Button -->
+    <button
+      id="scrollToTopBtn"
+      aria-label="Scroll to top"
+      title="Scroll to top"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          d="M11.29 8.71L6.7 13.3a1 1 0 001.42 1.42L12 10.83l3.88 3.89a1 1 0 001.42-1.42l-4.59-4.59a1 1 0 00-1.42 0z"
+        />
+      </svg>
+    </button>
+
+    <script>
+      // ===== Scroll to Top Button Logic =====
+      (function () {
+        const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        window.addEventListener("scroll", () => {
+          // Show button after scrolling down one viewport height
+          if (window.scrollY > window.innerHeight) {
+            scrollToTopBtn.setAttribute("data-visible", "true");
+          } else {
+            scrollToTopBtn.setAttribute("data-visible", "false");
+          }
+        });
+
+        scrollToTopBtn.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      })();
+    </script>
   </body>
 </html>
