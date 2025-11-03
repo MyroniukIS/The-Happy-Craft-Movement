@@ -230,6 +230,69 @@ body {
   }
 }
 
+/* ========== Header: Mobile Layout Overrides (<= 768px) ========== */
+@media (max-width: 768px) {
+  .header-inner {
+    display: grid;
+    grid-template-columns: auto 1fr auto; /* logo | title | burger */
+    grid-template-rows: auto auto; /* row for title, row for subtitle */
+    align-items: center;
+    column-gap: var(--space-sm);
+    row-gap: 4px; /* Small gap between title and subtitle */
+  }
+
+  .logo {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
+
+  /* Make h1 and h2 direct grid items */
+  .site-title-wrapper {
+    display: contents;
+  }
+
+  .site-title {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    padding-right: 0; /* Remove padding needed for flexbox layout */
+    /* Fix for very narrow screens: allow title to wrap and shrink */
+    word-break: break-word; /* Better word wrapping */
+    min-width: 0;
+    /*hyphens: auto; /* Allow automatic hyphenation */
+    /* text-align: center;  */
+  }
+
+  .site-subtitle {
+    grid-column: 1 / -1; /* Span across all columns */
+    grid-row: 2 / 3;
+    text-align: center; /* Center the subtitle */
+    margin-top: 0;
+    padding: 0 var(--space-sm);
+  }
+
+  .mobile-nav-toggle {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    position: static; /* Reset absolute positioning */
+    transform: none; /* Reset transform */
+  }
+}
+
+/* Specific fix for very narrow screens (< 400px) */
+@media (max-width: 400px) {
+  .site-title {
+    font-size: 0; /* Hide original text */
+    line-height: 1.2; /* Adjust line height for multi-line layout */
+  }
+
+  .site-title::before {
+    content: "The Happy\A Craft\A Movement"; /* Add line breaks */
+    font-size: 1.2rem; /* Set an appropriate font size */
+    white-space: pre-wrap; /* Respect the line breaks in content */
+    text-align: center;
+  }
+}
+
 /* For modern browsers: smooth, responsive size using clamp() */
 /* clamp(min, preferred, max): min 72px, preferred 6vw, max 130px */
 @supports (width: clamp(1px, 1vw, 1px)) {
