@@ -333,7 +333,7 @@
             </div>
           </div> -->
           <!-- Workshop Card - Christmas 11 Nov -->
-          <div class="workshop-card">
+          <!-- <div class="workshop-card">
             <h3>🎄👼 Angel Ornaments Workshop</h3>
             <p class="date">📅 Tue, 11 Nov 2025</p>
             <p class="time">⏰ 7 - 8 pm. Doors at 6:50pm</p>
@@ -346,21 +346,14 @@
                 class="map-link"
               >
                 Community Hall, Rathfarnham Educate Together National School,
-                Loreto Avenue, D14V5W4
-                <span aria-hidden="true">🗺️</span>
+                Loreto Avenue, D14V5W4 -->
+          <!-- <span aria-hidden="true">🗺️</span>
               </a>
             </p>
 
             <p class="invite-text">👇 Join me for a festive workshop! 👇</p>
             <div class="workshop-ctas" aria-hidden="false">
-              <!-- <a
-                href="https://www.eventbrite.ie/e/christmas-card-workshop-registration-1908944878519?utm-campaign=social&utm-content=attendeeshare&utm-medium=discovery&utm-term=listing&utm-source=wsa&aff=ebdsshwebmobile"
-                target="_blank"
-                class="whatsapp-btn"
-                aria-label="Join on Eventbrite"
-              >
-                <i class="fa-brands fa-whatsapp"></i> Join on Eventbrite
-              </a> -->
+
 
               <a
                 href="https://chat.whatsapp.com/BkGpCGZIjOVDEiwbHgfBgu?mode=wwt "
@@ -369,8 +362,8 @@
               >
                 <i class="fa-brands fa-whatsapp"></i> Join WhatsApp Group
               </a>
-              <a
-                class="download-materials"
+              <a -->
+          <!-- class="download-materials"
                 href="assets/materials/Angel ornaments suggested Material list.docx"
                 download
                 target="_blank"
@@ -380,7 +373,7 @@
                 Download materials list
               </a>
             </div>
-          </div>
+          </div> -->
           <!-- Workshop Card - Christmas 18 Nov -->
           <div class="workshop-card">
             <h3>🎄❄ Snowflake Ornaments Workshop</h3>
@@ -567,8 +560,15 @@
         id="gallery"
         aria-labelledby="gallery-heading"
       >
-        <h2 class="section-title">Workshop Gallery</h2>
-
+        <h2 class="section-title" id="gallery-heading">Workshop Gallery</h2>
+        <div class="view-more-container">
+          <a
+            href="./workshop-gallery.html"
+            class="view-more-btn"
+            aria-label="View more workshop gallery images"
+            >View More</a
+          >
+        </div>
         <div class="container">
           <!-- Accessible Image Carousel -->
           <div
@@ -1198,6 +1198,86 @@ node generate-gallery.js
                     loading="lazy"
                   />
                 </li>
+
+                <li class="carousel-slide">
+                  <img
+                    src="./workshop_gallery_images/img_76.jpg"
+                    alt="Workshop image img_76.jpg"
+                    loading="lazy"
+                  />
+                </li>
+
+                <li class="carousel-slide">
+                  <img
+                    src="./workshop_gallery_images/img_77.jpg"
+                    alt="Workshop image img_77.jpg"
+                    loading="lazy"
+                  />
+                </li>
+
+                <li class="carousel-slide">
+                  <img
+                    src="./workshop_gallery_images/img_78.jpg"
+                    alt="Workshop image img_78.jpg"
+                    loading="lazy"
+                  />
+                </li>
+
+                <li class="carousel-slide">
+                  <img
+                    src="./workshop_gallery_images/img_79.jpg"
+                    alt="Workshop image img_79.jpg"
+                    loading="lazy"
+                  />
+                </li>
+
+                <li class="carousel-slide">
+                  <img
+                    src="./workshop_gallery_images/img_80.jpg"
+                    alt="Workshop image img_80.jpg"
+                    loading="lazy"
+                  />
+                </li>
+
+                <li class="carousel-slide">
+                  <img
+                    src="./workshop_gallery_images/img_81.jpg"
+                    alt="Workshop image img_81.jpg"
+                    loading="lazy"
+                  />
+                </li>
+
+                <li class="carousel-slide">
+                  <img
+                    src="./workshop_gallery_images/img_82.jpg"
+                    alt="Workshop image img_82.jpg"
+                    loading="lazy"
+                  />
+                </li>
+
+                <li class="carousel-slide">
+                  <img
+                    src="./workshop_gallery_images/img_83.jpg"
+                    alt="Workshop image img_83.jpg"
+                    loading="lazy"
+                  />
+                </li>
+
+                <li class="carousel-slide">
+                  <img
+                    src="./workshop_gallery_images/img_84.jpg"
+                    alt="Workshop image img_84.jpg"
+                    loading="lazy"
+                  />
+                </li>
+
+                <li class="carousel-slide">
+                  <img
+                    src="./workshop_gallery_images/img_85.jpg"
+                    alt="Workshop image img_85.jpg"
+                    loading="lazy"
+                  />
+                </li>
                 <!-- GALLERY-END -->
               </ul>
             </div>
@@ -1538,37 +1618,7 @@ node generate-gallery.js
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>
 
-    <script>
-      // ===== Mobile Navigation Logic =====
-      (function () {
-        const navToggle = document.querySelector(".mobile-nav-toggle");
-        const primaryNav = document.querySelector(".mobile-nav");
-        const mainContent = document.querySelector(".site-main");
-        const footerContent = document.querySelector(".site-footer");
-
-        navToggle.addEventListener("click", () => {
-          const isVisible = primaryNav.getAttribute("data-visible") === "true";
-          if (isVisible) {
-            primaryNav.setAttribute("data-visible", "false");
-            navToggle.setAttribute("aria-expanded", "false");
-            document.body.classList.remove("no-scroll");
-          } else {
-            primaryNav.setAttribute("data-visible", "true");
-            navToggle.setAttribute("aria-expanded", "true");
-            document.body.classList.add("no-scroll");
-          }
-        });
-
-        // Close menu when a link is clicked
-        primaryNav.querySelectorAll("a").forEach((link) => {
-          link.addEventListener("click", () => {
-            primaryNav.setAttribute("data-visible", "false");
-            navToggle.setAttribute("aria-expanded", "false");
-            document.body.classList.remove("no-scroll");
-          });
-        });
-      })();
-    </script>
+    <script src="./scripts/mobile-nav.js"></script>
     <script>
       // ===== Workshop Gallery Carousel Logic =====
       (function () {
