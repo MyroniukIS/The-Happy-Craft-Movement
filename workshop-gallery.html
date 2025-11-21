@@ -78,17 +78,14 @@
 
     <main id="main" class="site-main" role="main">
       <section
-        class="gallery-page-section"
+        class="gallery-section gallery-page-section"
         aria-labelledby="gallery-page-heading"
       >
         <div class="container">
-          <h2 id="gallery-page-heading" class="section-title">
+          <h1 id="gallery-page-heading" class="section-title">
             Full Workshop Gallery
-          </h2>
-          <p style="text-align: center; font-size: 1.2rem; margin-bottom: 40px">
-            Here you can see all the wonderful creations from our workshops.
-            More images will be added soon!
-          </p>
+          </h1>
+
           <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="paint">Paint Along</button>
@@ -99,7 +96,7 @@
               Christmas Crafts
             </button>
           </div>
-          <!-- Image grid will go here in the future -->
+
           <div class="gallery-grid">
             <!-- Wreath Making -->
             <div class="gallery-item" data-category="wreath">
@@ -707,7 +704,123 @@
                 loading="lazy"
               />
             </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_86.jpg"
+                alt="Workshop gallery image 86"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_87.jpg"
+                alt="Workshop gallery image 87"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_88.jpg"
+                alt="Workshop gallery image 88"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_89.jpg"
+                alt="Workshop gallery image 89"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_90.jpg"
+                alt="Workshop gallery image 90"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_91.jpg"
+                alt="Workshop gallery image 91"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_92.jpg"
+                alt="Workshop gallery image 92"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_93.jpg"
+                alt="Workshop gallery image 93"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_94.jpg"
+                alt="Workshop gallery image 94"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_95.jpg"
+                alt="Workshop gallery image 95"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_96.jpg"
+                alt="Workshop gallery image 96"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_97.jpg"
+                alt="Workshop gallery image 97"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_98.jpg"
+                alt="Workshop gallery image 98"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_99.jpg"
+                alt="Workshop gallery image 99"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_100.jpg"
+                alt="Workshop gallery image 100"
+                loading="lazy"
+              />
+            </div>
+            <div class="gallery-item" data-category="christmas">
+              <img
+                src="./workshop_gallery_images/img_101.jpg"
+                alt="Workshop gallery image 101"
+                loading="lazy"
+              />
+            </div>
           </div>
+
+          <p style="text-align: center; font-size: 1.2rem; margin-bottom: 40px">
+            More images will be added soon! 🥳
+          </p>
         </div>
       </section>
     </main>
@@ -775,6 +888,29 @@
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>
+
+    <!-- Scroll to Top Button -->
+    <button
+      id="scrollToTopBtn"
+      aria-label="Scroll to top"
+      title="Scroll to top"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          d="M11.29 8.71L6.7 13.3a1 1 0 001.42 1.42L12 10.83l3.88 3.89a1 1 0 001.42-1.42l-4.59-4.59a1 1 0 00-1.42 0z"
+        />
+      </svg>
+    </button>
+
     <script src="./scripts/mobile-nav.js"></script>
+    <script src="./scripts/gallery-filter.js"></script>
+    <script src="./scripts/scroll-to-top.js"></script>
   </body>
 </html>

@@ -540,16 +540,16 @@ section > .container > h2 {
   text-align: center;
 }
 
-/* .workshops .section-title {
+.workshops .section-title {
   font-family: "Playfair Display", serif;
   font-size: 2rem;
   margin-bottom: 40px;
   color: var(--color-primary-dark);
-} */
-
-.workshops .section-title {
-  color: var(--color-primary-dark);
 }
+
+/* .workshops .section-title {
+  color: var(--color-primary-dark);
+} */
 
 .workshops-container {
   display: flex;
@@ -1905,6 +1905,11 @@ section > .container > h2 {
   }
 }
 
+/* Add top padding for the gallery page section to match other sections */
+.gallery-page-section {
+  padding-top: var(--space-lg);
+}
+
 /* ========== Gallery Page: Filter Buttons ========== */
 .filter-buttons {
   display: flex;
@@ -1952,50 +1957,66 @@ section > .container > h2 {
 }
 
 /* ========== Gallery Page: Image Grid ========== */
+/* --- Flexbox Gallery Styles --- */
 .gallery-grid {
-  display: grid;
-  /* Start with 1 column on the smallest screens for large, clear images */
-  grid-template-columns: 1fr;
-  /* Use a smaller gap for a tighter look, consistent across sizes */
-  gap: var(--space-sm);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px; /* Відступ між зображеннями */
+  justify-content: center; /* Центруємо елементи, якщо в ряду є вільне місце */
+  max-width: 100%; /* За замовчуванням на всю ширину */
+  margin: 0 auto; /* Центрування контейнера */
 }
 
 .gallery-item {
-  border-radius: var(--radius);
+  flex: 1 1 100%; /* Мобільний: 1 колонка */
+  max-width: 100%;
+  max-height: 450px; /* Обмежуємо максимальну висоту плитки */
+  box-sizing: border-box;
   overflow: hidden; /* Ensures the image corners are rounded */
-  box-shadow: var(--card-shadow);
-  background-color: rgba(0, 0, 0, 0.2); /* Placeholder bg for loading */
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  aspect-ratio: 1 / 1; /* Creates a square container for all images */
+  border-radius: 8px; /* Легке заокруглення кутів */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* Додано для вертикального центрування зображення */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.1); /* Фон для порожнього простору */
 }
 
 .gallery-item:hover {
-  transform: scale(1.03);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* This crops images to fit the square container without distortion */
   display: block;
+  width: 100%;
+  height: auto; /* Дозволяє зображенню зберігати пропорції */
+  object-fit: contain; /* Гарантує, що все зображення буде видно */
+  transition: transform 0.4s ease-in-out;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05); /* Збільшення зображення при наведенні */
 }
 
 /* Responsive adjustments for the gallery grid */
-@media (min-width: 500px) {
+/* Планшетна версія: 2 колонки */
+@media (min-width: 768px) {
   .gallery-grid {
-    /* 2 columns for small tablets and wide phones */
-    grid-template-columns: repeat(2, 1fr);
+    max-width: 1400px; /* Розширюємо секцію */
+  }
+  .gallery-item {
+    /* Розрахунок ширини для 2 колонок з урахуванням відступу */
+    flex-basis: calc(50% - 15px);
+    max-width: calc(50% - 15px);
   }
 }
 
-@media (min-width: 768px) {
-  .gallery-grid {
-    max-width: 900px; /* Limit width to keep images large */
-    margin: 0 auto; /* Center the grid itself */
+/* Десктопна версія: 3 колонки */
+@media (min-width: 992px) {
+  .gallery-item {
+    /* Розрахунок ширини для 3 колонок з урахуванням відступу */
+    flex-basis: calc(33.333% - 20px);
+    max-width: calc(33.333% - 20px);
   }
 }
-/* На екранах до 500px — одна колонка.
-Від 500px до 767px — дві колонки на всю ширину.
-Від 768px і ширше — дві великі колонки, розташовані по центру екрана.
- */
