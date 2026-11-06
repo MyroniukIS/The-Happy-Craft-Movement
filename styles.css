@@ -82,8 +82,14 @@ body {
 }
 body {
   margin: 0;
-  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial;
+  font-family:
+    "Roboto",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial;
   background: var(--bg-dark);
   color: var(--text-on-dark);
   -webkit-font-smoothing: antialiased;
@@ -144,116 +150,128 @@ body {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
-/* 
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-md);
-  text-align: center;
-} */
 
 .header-inner {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* логотип залишається зліва */
-  position: relative; /* For mobile nav positioning */
+  justify-content: space-between;
+  position: relative;
   gap: var(--space-md);
-  text-align: left;
 }
 
 .logo img {
   display: block;
   border-radius: 8px;
-  /* Fallback explicit sizes (used by older browsers like IE11) */
-  width: 90px;
-  height: auto; /* keep natural aspect ratio */
-  max-height: 130px;
-  object-fit: contain; /* preserve logo aspect */
-  transition: width 260ms ease, height 260ms ease;
+  width: clamp(70px, 8vw, 90px);
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.3s ease;
 }
 
-/* .site-title-wrapper {
-  flex: 1;
-  text-align: center;
-} */
+.logo a:hover img {
+  transform: scale(1.05);
+}
+
 .site-title-wrapper {
   flex: 1;
-  text-align: left;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* Add padding to prevent title from overlapping with the burger button */
-  padding-right: 44px;
 }
 
-@media (max-width: 768px) {
-  .site-title-wrapper {
-  }
-}
-
-/* Pacifico font for title, larger */
 .site-title {
   margin: 0;
-  font-family: "Pacifico", "Playfair Display", Georgia, serif;
+  font-family: "Pacifico", cursive;
   color: var(--text-on-dark);
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
-  line-height: 1;
-  text-align: left;
-}
-
-/* Subtitle under main title */
-.site-subtitle {
-  margin: 15px 0 0 0;
-  /* font-family: "Pacifico", "Playfair Display", Georgia, serif;  */
-  color: var(--text-on-dark);
-  font-size: clamp(1rem, 3vw, 1.6rem); /* трошки менше за h1 */
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
   line-height: 1.2;
-  text-align: left;
-  opacity: 0.9; /* легкий візуальний контраст */
 }
 
-@media (max-width: 600px) {
-  /* .header-inner {
-    flex-direction: column;
-    text-align: center;
-  } */
+.site-subtitle {
+  margin: 8px 0 0 0;
+  color: var(--text-on-dark);
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  line-height: 1.2;
+  opacity: 0.8;
+}
+
+/* Desktop Navigation */
+.desktop-nav {
+  display: block;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: var(--space-lg);
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list li {
+  margin: 0;
+}
+
+.nav-list a {
+  color: var(--text-on-dark);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition:
+    color 0.3s ease,
+    border-bottom 0.3s ease;
+  padding: 5px 0;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+
+.nav-list a:hover,
+.nav-list a:focus {
+  color: var(--accent-2);
+  border-bottom-color: var(--accent-2);
+}
+
+.nav-list a:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+@media (max-width: 1024px) {
+  .nav-list {
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+  .nav-list a {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
   .header-inner {
-    flex-direction: row; /* залишається горизонтально */
-    align-items: center;
-    justify-content: flex-start;
+    flex-wrap: wrap;
   }
 
-  .site-header .container {
-    /* Ensure button doesn't cause overflow on small screens */
-    position: relative;
+  .header-inner .desktop-nav {
+    flex: 1 0 100%;
   }
 
-  .logo img {
-    margin-bottom: 10px;
-    /* slightly larger on small phones for better visibility */
-    width: 72px;
-    height: 72px;
-  }
-
-  .site-title {
-    font-size: clamp(1.4rem, 4vw, 2rem);
-  }
-
-  .site-subtitle {
-    font-size: clamp(1rem, 3vw, 1.4rem);
+  .header-inner .nav-list {
+    justify-content: center;
   }
 }
 
-/* ========== Header: Mobile Layout Overrides (<= 768px) ========== */
 @media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
   .header-inner {
     display: grid;
-    grid-template-columns: auto 1fr auto; /* logo | title | burger */
-    grid-template-rows: auto auto; /* row for title, row for subtitle */
-    align-items: center;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
     column-gap: var(--space-sm);
-    row-gap: 4px; /* Small gap between title and subtitle */
+    row-gap: 4px;
   }
 
   .logo {
@@ -261,7 +279,6 @@ body {
     grid-row: 1 / 2;
   }
 
-  /* Make h1 and h2 direct grid items */
   .site-title-wrapper {
     display: contents;
   }
@@ -269,20 +286,19 @@ body {
   .site-title {
     grid-column: 2 / 3;
     grid-row: 1 / 2;
-    padding-right: 0; /* Remove padding needed for flexbox layout */
-    /* Fix for very narrow screens: allow title to wrap and shrink */
-    word-break: break-word; /* Better word wrapping */
+    text-align: left;
+    padding-right: 0;
+    word-break: break-word;
     min-width: 0;
-    /*hyphens: auto; /* Allow automatic hyphenation */
-    /* text-align: center;  */
   }
 
   .site-subtitle {
-    grid-column: 1 / -1; /* Span across all columns */
+    grid-column: 1 / -1;
     grid-row: 2 / 3;
-    text-align: center; /* Center the subtitle */
-    margin-top: 0;
+    text-align: center;
+    margin-top: 5px;
     padding: 0 var(--space-sm);
+    font-size: 0.9rem;
   }
 
   .mobile-nav-toggle {
@@ -406,7 +422,10 @@ body {
     height: 3px; /* Thicker lines */
     background-color: var(--text-on-dark);
     border-radius: 3px; /* Rounded ends */
-    transition: transform 0.3s ease, top 0.3s ease, opacity 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      top 0.3s ease,
+      opacity 0.3s ease;
     transform: translateX(-50%);
   }
 
@@ -633,7 +652,9 @@ section > .container > h2 {
   color: var(--accent-1); /* стиль у тон решти тексту */
   font-weight: 600;
   text-decoration: none; /* прибираємо стандартне підкреслення */
-  transition: color 0.3s ease, text-decoration 0.3s ease;
+  transition:
+    color 0.3s ease,
+    text-decoration 0.3s ease;
 }
 
 .map-link:hover,
@@ -661,7 +682,9 @@ section > .container > h2 {
   padding: 10px 18px;
   border-radius: 30px;
   margin-top: 5px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
 }
 
 .whatsapp-btn:hover {
@@ -685,7 +708,9 @@ section > .container > h2 {
   padding: 10px 16px;
   border-radius: 30px;
   margin-top: 12px;
-  transition: background-color 0.2s ease, transform 0.15s ease,
+  transition:
+    background-color 0.2s ease,
+    transform 0.15s ease,
     box-shadow 0.15s ease;
 }
 
@@ -1087,8 +1112,14 @@ section > .container > h2 {
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
   color: var(--placeholder-color);
-  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial;
+  font-family:
+    "Roboto",
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial;
   opacity: 1; /* Firefox applies a lower opacity by default */
 }
 
@@ -1136,8 +1167,8 @@ section > .container > h2 {
 /* Success state for the whole form container */
 .form-success-highlight {
   /* Adds a green glow around the form, preserving the original shadow */
-  box-shadow: 0 0 0 3px
-      color-mix(in srgb, var(--color-success) 40%, transparent),
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--color-success) 40%, transparent),
     var(--card-shadow);
   /* Smooth transition for the effect */
   transition: box-shadow 300ms ease-in-out;
@@ -1161,7 +1192,9 @@ section > .container > h2 {
   cursor: pointer;
   width: 100%; /* Займає всю доступну ширину в контейнері */
   max-width: 320px; /* Максимальна ширина на великих екранах */
-  transition: background 0.2s ease, transform 0.15s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
 }
 
 .primary-btn[disabled] {
@@ -1186,7 +1219,10 @@ section > .container > h2 {
   font-size: 1.15rem; /* slightly larger */
   font-weight: 700;
   margin-left: 6px;
-  transition: color 160ms ease, transform 180ms ease, opacity 180ms ease;
+  transition:
+    color 160ms ease,
+    transform 180ms ease,
+    opacity 180ms ease;
   opacity: 1;
 }
 
@@ -1228,7 +1264,10 @@ section > .container > h2 {
   text-align: right;
   max-width: 420px;
   margin-left: auto; /* push it to the right within .footer-inner */
-  transition: transform 300ms ease, max-width 220ms ease, align-items 220ms ease;
+  transition:
+    transform 300ms ease,
+    max-width 220ms ease,
+    align-items 220ms ease;
 }
 
 /* Footer responsive behavior
@@ -1581,7 +1620,9 @@ section > .container > h2 {
   max-height: 450px;
   object-fit: contain; /* зберігає пропорції */
   display: block;
-  transition: max-height 0.4s ease, width 0.4s ease; /* плавна зміна висоти при ресайзі */
+  transition:
+    max-height 0.4s ease,
+    width 0.4s ease; /* плавна зміна висоти при ресайзі */
   border-radius: 0; /* remove rounded corners */
   box-shadow: none; /* no individual shadow */
   background: transparent; /* no background boxes */
@@ -1608,7 +1649,8 @@ section > .container > h2 {
 .carousel-btn:hover {
   background: rgba(228, 90, 146, 0.85);
   /* subtle glow that won't be clipped when overflow: visible is set */
-  box-shadow: 0 6px 18px rgba(228, 90, 146, 0.18),
+  box-shadow:
+    0 6px 18px rgba(228, 90, 146, 0.18),
     0 0 0 6px rgba(228, 90, 146, 0.08);
 }
 
@@ -1770,7 +1812,10 @@ section > .container > h2 {
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px);
-  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease,
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease,
+    transform 0.3s ease,
     background 0.3s ease;
 }
 
@@ -1900,7 +1945,10 @@ section > .container > h2 {
   text-decoration: none;
   cursor: pointer;
   min-width: 280px; /* Match the responsive width of the form button */
-  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .view-more-btn:hover,
@@ -1990,7 +2038,9 @@ section > .container > h2 {
   overflow: hidden; /* Ensures the image corners are rounded */
   border-radius: 8px; /* Легке заокруглення кутів */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   /* Додано для вертикального центрування зображення */
   display: flex;
   align-items: center;
