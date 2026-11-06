@@ -23,10 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Filter the gallery items
     galleryItems.forEach((item) => {
-      const itemCategory = item.dataset.category;
+      const itemCategories = (item.dataset.category || "").trim().split(/\s+/);
 
       // Show item if filter is 'all' or if item's category matches the filter
-      if (filterValue === "all" || itemCategory === filterValue) {
+      if (filterValue === "all" || itemCategories.includes(filterValue)) {
         item.style.display = "flex"; // Use 'flex' as it's the default display for gallery-item
       } else {
         item.style.display = "none"; // Hide item if it doesn't match
